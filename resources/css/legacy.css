@@ -1,0 +1,225 @@
+/* ClinicApp — estilos customizados */
+* { -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+.text-primary { color: var(--cor-primaria, #0ea5e9) !important; }
+.bg-primary { background-color: var(--cor-primaria, #0ea5e9) !important; color: #fff !important; }
+.border-primary { border-color: var(--cor-primaria, #0ea5e9) !important; }
+.hover\:border-primary:hover { border-color: var(--cor-primaria, #0ea5e9) !important; }
+.ring-primary\/10 { --tw-ring-color: color-mix(in srgb, var(--cor-primaria, #0ea5e9) 10%, transparent) !important; }
+
+
+a.btn,
+button.btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.72rem 1.15rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform .18s ease, box-shadow .22s ease, filter .22s ease, background-color .22s ease, border-color .22s ease;
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255,255,255,0.35);
+}
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.18), rgba(255,255,255,0));
+  pointer-events: none;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 30px rgba(15, 23, 42, 0.14),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+  filter: saturate(1.03);
+}
+.btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 6px 14px rgba(15, 23, 42, 0.10),
+    inset 0 2px 6px rgba(0,0,0,0.08);
+}
+.btn:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--cor-primaria, #0ea5e9) 16%, transparent),
+    0 12px 28px rgba(15, 23, 42, 0.14);
+}
+.btn i,
+.btn svg {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.btn[disabled],
+.btn.disabled,
+button.btn:disabled {
+  opacity: .58;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--cor-primaria, #0ea5e9) 0%, var(--cor-secundaria, #1d4ed8) 100%);
+  color: #fff;
+  border-color: rgba(255,255,255,0.18);
+  box-shadow:
+    0 14px 28px rgba(14, 165, 233, 0.28),
+    inset 0 1px 0 rgba(255,255,255,0.24);
+}
+.btn-primary:hover {
+  filter: brightness(1.03);
+  box-shadow:
+    0 18px 36px rgba(14, 165, 233, 0.34),
+    inset 0 1px 0 rgba(255,255,255,0.28);
+}
+
+.card {
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  border: 1px solid rgb(241 245 249);
+}
+
+input.form-input, select.form-select, textarea.form-textarea {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(203 213 225);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.15s;
+}
+input.form-input:focus, select.form-select:focus, textarea.form-textarea:focus {
+  border-color: var(--cor-primaria, #0ea5e9);
+  box-shadow: 0 0 0 3px rgba(14,165,233,0.12);
+}
+
+.table-modern {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table-modern thead th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgb(100 116 139);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgb(226 232 240);
+  background: rgb(248 250 252);
+}
+.table-modern tbody td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgb(241 245 249);
+  font-size: 0.875rem;
+  color: rgb(51 65 85);
+}
+.table-modern tbody tr:hover { background: rgb(248 250 252); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border-radius: 9999px;
+}
+.badge-success { background: rgb(220 252 231); color: rgb(22 101 52); }
+.badge-warning { background: rgb(254 249 195); color: rgb(133 77 14); }
+.badge-info { background: rgb(219 234 254); color: rgb(30 64 175); }
+.badge-danger { background: rgb(254 226 226); color: rgb(153 27 27); }
+.badge-secondary { background: rgb(241 245 249); color: rgb(71 85 105); }
+
+.nav-item-active {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff !important;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.12), 0 10px 20px rgba(15, 23, 42, 0.12);
+}
+.nav-item-active:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.specialty-option {
+  border-color: transparent;
+}
+.specialty-option.is-selected {
+  border-color: var(--cor-primaria, #0ea5e9) !important;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--cor-primaria, #0ea5e9) 10%, transparent);
+}
+.specialty-option.is-selected .text-slate-800 {
+  color: var(--cor-secundaria, #1d4ed8);
+}
+
+/* Sidebar mobile */
+@media (max-width: 1023px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.show { transform: translateX(0); }
+}
+
+/* Odontograma */
+.tooth {
+  width: 32px; height: 44px;
+  background: white;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px 6px 12px 12px;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2px;
+  font-size: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 600;
+  color: #475569;
+}
+.tooth:hover { border-color: #0891b2; transform: translateY(-2px); }
+.tooth.carie { background: #fecaca; border-color: #dc2626; }
+.tooth.restauracao { background: #bfdbfe; border-color: #2563eb; }
+.tooth.ausente { background: #1f2937; color: white; opacity: 0.3; }
+.tooth.tratamento { background: #fef08a; border-color: #ca8a04; }
+
+/* Calendário */
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.calendar-day {
+  background: white;
+  min-height: 100px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.8rem;
+}
+.calendar-day.today { background: #fef3c7; border-color: #f59e0b; }
+.calendar-day.other-month { opacity: 0.4; }
+.calendar-event {
+  background: var(--cor-primaria, #0ea5e9);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  margin-top: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
