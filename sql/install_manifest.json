@@ -1,0 +1,1417 @@
+{
+    "version": "1.2.0",
+    "latest_upgrade": 15,
+    "sources": {
+        "database.sql": "14fe11b07ee5d5766beee2ef431a862a147db7f7dbb980534dbd097081392461",
+        "upgrade_v2.sql": "8dcb77dd63c0f2a57d1c216d8a021aa77ef8ec47b402c566c0b52256e9996dc2",
+        "upgrade_v3_multiempresa_licencas.sql": "33b0e703191ad678298c37dc82cb4c641a12ec5b7e7a390475ab1aacb50d5558",
+        "upgrade_v4_multiempresa_hostinger.sql": "c0de550fcf64a82c829c848f7fbb6243fc0faa75fbdb29c595e1207481740e3a",
+        "upgrade_v5_importador_iclinic.sql": "f286fedd4157c8352b65a2303461e7a2eac1d52f31098e696185fae67244d9ca",
+        "upgrade_v6_tema_psicologia.sql": "c5391c59f43fafe723cb3703b8af2a5669f50931295409386585f5c41c775f15",
+        "upgrade_v7_prontuario_psicologia.sql": "46f8212aecba4376c74ab98a973cfe757b7c5b3929162fe98ae0cdd6d689d442",
+        "upgrade_v8_especialidades.sql": "0ce10de96450d6c08307da7b7ab47f802f65c280a6e71517df8a5117fd664643",
+        "upgrade_v9_protocolos_cuidados.sql": "1afcd5c6fb5a47c9549bf10c398f4e93bde9054c02b406aa09a20cc6d252dc5b",
+        "upgrade_v10_github_updater.sql": "18f3de7dc552cb96fca2a07a365a0199fae9ca18f814735e1e0609b9884862a2",
+        "upgrade_v11_github_token_sidebar.sql": "f00401ebb0a519c40d92c983aa92be21f126de6a7bbd4ae7e58cab9f927fbae2",
+        "upgrade_v12_comunicacao_calendar_pwa.sql": "5aeeca588f685d03b1ef83a2eb825c7021ee99112138fd18c34e0e57680dfc00",
+        "upgrade_v13_agenda_bi_lgpd.sql": "fd02a4259a8721a07bc0f6cb5bcd99510f23d288bd147f8b4110e998cef327c7",
+        "upgrade_v14_integridade_multiempresa.sql": "ee0d3a0efc0b77039a8a0a6d867bfe6c2ec4c136f659b6424159679eface81e5",
+        "upgrade_v15_portal_paciente.sql": "a00605c6b4f1d8b8a836d63eac2370d5f77b0e34f111214600b407d59659b3a4"
+    },
+    "schema_file": "clinicapp_banco_geral.sql",
+    "schema_sha256": "cc95034e5dee265a337c87e0cc61e561a2b656084c4d337e1a6fa29640c097fb",
+    "tables": {
+        "agenda_fila_espera": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "procedimento_id",
+                "prioridade",
+                "data_preferencial",
+                "hora_inicio_preferencial",
+                "hora_fim_preferencial",
+                "observacoes",
+                "status",
+                "agendamento_id",
+                "contatado_em",
+                "agendado_em",
+                "criado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_agenda_fila_empresa_status",
+                "idx_agenda_fila_paciente",
+                "idx_agenda_fila_profissional"
+            ],
+            "foreign_keys": []
+        },
+        "agendamentos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "procedimento_id",
+                "data_hora_inicio",
+                "data_hora_fim",
+                "status",
+                "modalidade",
+                "observacoes",
+                "valor",
+                "lembrete_email_enviado",
+                "confirmacao_status",
+                "confirmado_em",
+                "ultimo_lembrete_em",
+                "cancelado_em",
+                "cancelado_motivo",
+                "encaixe_origem_fila_id",
+                "criado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "fk_ag_paciente",
+                "fk_ag_prof",
+                "idx_agendamentos_empresa",
+                "idx_data"
+            ],
+            "foreign_keys": [
+                "fk_agendamentos_empresa_multi"
+            ]
+        },
+        "anexos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "prontuario_id",
+                "tipo",
+                "titulo",
+                "descricao",
+                "arquivo",
+                "mime_type",
+                "tamanho",
+                "criado_por",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_anex_paciente",
+                "idx_anexos_empresa"
+            ],
+            "foreign_keys": [
+                "fk_anexos_empresa_multi"
+            ]
+        },
+        "backups": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "tipo",
+                "arquivo",
+                "tamanho_bytes",
+                "status",
+                "erro",
+                "criado_em",
+                "concluido_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_backups_empresa"
+            ],
+            "foreign_keys": [
+                "fk_backups_empresa_multi"
+            ]
+        },
+        "bloqueios_horario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "profissional_id",
+                "data_inicio",
+                "data_fim",
+                "motivo",
+                "tipo",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_bloq_data",
+                "idx_bloqueios_empresa"
+            ],
+            "foreign_keys": [
+                "fk_bloqueios_empresa_multi"
+            ]
+        },
+        "cardiologia_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "cardio_queixa_principal",
+                "cardio_dor_toracica",
+                "cardio_dispneia",
+                "cardio_palpitacoes",
+                "cardio_sincope",
+                "cardio_hipertensao",
+                "cardio_diabetes",
+                "cardio_tabagismo",
+                "cardio_hist_familiar",
+                "cardio_pa",
+                "cardio_fc",
+                "cardio_imc",
+                "cardio_exame_fisico",
+                "cardio_ecg",
+                "cardio_eco",
+                "cardio_teste_ergometrico",
+                "cardio_laboratoriais",
+                "cardio_hipotese_diag",
+                "cardio_risco_cv",
+                "cardio_medicacoes",
+                "cardio_metas",
+                "cardio_conduta",
+                "cardio_orientacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_cardiologia_empresa",
+                "idx_cardiologia_paciente",
+                "idx_cardiologia_profissional",
+                "idx_cardiologia_risco",
+                "uniq_cardiologia_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "categorias_financeiras": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "nome",
+                "tipo",
+                "cor",
+                "ativo"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_cat_fin_empresa"
+            ],
+            "foreign_keys": [
+                "fk_cat_fin_empresa_multi"
+            ]
+        },
+        "cid10": {
+            "columns": [
+                "empresa_id",
+                "codigo",
+                "descricao",
+                "categoria"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_cid10_empresa",
+                "idx_cid_desc"
+            ],
+            "foreign_keys": [
+                "fk_cid10_empresa_multi"
+            ]
+        },
+        "configuracoes": {
+            "columns": [
+                "empresa_id",
+                "chave",
+                "valor",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_configuracoes_empresa"
+            ],
+            "foreign_keys": [
+                "fk_config_empresa_multi"
+            ]
+        },
+        "contas_financeiras": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "categoria_id",
+                "paciente_id",
+                "agendamento_id",
+                "nfse_id",
+                "tipo",
+                "descricao",
+                "valor",
+                "data_vencimento",
+                "data_pagamento",
+                "forma_pagamento",
+                "status",
+                "parcela_numero",
+                "parcela_total",
+                "parcela_grupo",
+                "observacoes",
+                "criado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_contas_fin_empresa",
+                "idx_fin_data",
+                "idx_fin_paciente",
+                "idx_fin_status"
+            ],
+            "foreign_keys": [
+                "fk_contas_fin_empresa_multi"
+            ]
+        },
+        "empresas": {
+            "columns": [
+                "id",
+                "razao_social",
+                "nome_fantasia",
+                "cnpj",
+                "inscricao_municipal",
+                "inscricao_estadual",
+                "cnae",
+                "item_lista_servico",
+                "codigo_tributacao_municipio",
+                "regime_tributario",
+                "optante_simples",
+                "incentivador_cultural",
+                "aliquota_iss",
+                "endereco_cep",
+                "endereco_logradouro",
+                "endereco_numero",
+                "endereco_complemento",
+                "endereco_bairro",
+                "endereco_cidade",
+                "endereco_uf",
+                "endereco_codigo_municipio",
+                "telefone",
+                "email",
+                "dominio_principal",
+                "ativo",
+                "tema_padrao",
+                "logo",
+                "asten_ambiente",
+                "asten_token",
+                "asten_usuario",
+                "asten_senha",
+                "asten_url_ws",
+                "asten_serie_rps",
+                "asten_proximo_rps",
+                "asten_certificado_a1",
+                "asten_certificado_senha",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "uk_cnpj"
+            ],
+            "foreign_keys": []
+        },
+        "exames_modelos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "nome",
+                "categoria",
+                "exames",
+                "instrucoes",
+                "ativo"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_exames_modelos_empresa"
+            ],
+            "foreign_keys": [
+                "fk_exames_modelos_empresa_multi"
+            ]
+        },
+        "ginecologia_obstetricia_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "go_tipo_atendimento",
+                "go_queixa_principal",
+                "go_dum",
+                "go_gpa",
+                "go_idade_gestacional",
+                "go_dpp",
+                "go_ciclo_menstrual",
+                "go_contracepcao",
+                "go_sangramento",
+                "go_patologias_previas",
+                "go_cirurgias_previas",
+                "go_ist_risco",
+                "go_ultimo_papanicolau",
+                "go_ultima_mamografia",
+                "go_pre_natal_risco",
+                "go_movimentos_fetais",
+                "go_sinais_alarme",
+                "go_pa",
+                "go_peso",
+                "go_bcf",
+                "go_altura_uterina",
+                "go_exame_fisico",
+                "go_exames_solicitados",
+                "go_hipotese_diag",
+                "go_conduta",
+                "go_orientacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_go_empresa",
+                "idx_go_paciente",
+                "idx_go_profissional",
+                "idx_go_tipo",
+                "uniq_go_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "importacoes": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "tipo",
+                "arquivo",
+                "total_linhas",
+                "sucesso",
+                "erros",
+                "log",
+                "status",
+                "criado_por",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_importacoes_empresa",
+                "idx_importacoes_empresa_data",
+                "idx_importacoes_tipo"
+            ],
+            "foreign_keys": [
+                "fk_importacoes_empresa_multi"
+            ]
+        },
+        "licencas": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "plano",
+                "status",
+                "chave_licenca",
+                "validade_inicio",
+                "validade_fim",
+                "max_usuarios",
+                "max_pacientes",
+                "observacoes",
+                "criado_por",
+                "atualizado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_licenca_empresa",
+                "idx_licenca_status",
+                "idx_licencas_empresa",
+                "idx_licencas_empresa_ref",
+                "idx_licencas_status",
+                "uk_chave_licenca",
+                "uk_licencas_chave"
+            ],
+            "foreign_keys": [
+                "fk_licencas_empresa_multi"
+            ]
+        },
+        "logs": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "usuario_id",
+                "acao",
+                "entidade",
+                "entidade_id",
+                "descricao",
+                "ip",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_log_user",
+                "idx_logs_empresa"
+            ],
+            "foreign_keys": [
+                "fk_logs_empresa_multi"
+            ]
+        },
+        "medicamentos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "nome",
+                "apresentacao",
+                "principio_ativo",
+                "tipo"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_med_nome",
+                "idx_medicamentos_empresa"
+            ],
+            "foreign_keys": [
+                "fk_medicamentos_empresa_multi"
+            ]
+        },
+        "modelos_clinicos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "tema",
+                "tipo_documento",
+                "titulo",
+                "conteudo",
+                "campos_chave",
+                "tags",
+                "ativo",
+                "criado_por",
+                "atualizado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_modelos_ativo",
+                "idx_modelos_empresa_tema",
+                "idx_modelos_tipo"
+            ],
+            "foreign_keys": []
+        },
+        "neurologia_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "neuro_queixa_principal",
+                "neuro_inicio_quadro",
+                "neuro_instalacao",
+                "neuro_cefaleia",
+                "neuro_tontura",
+                "neuro_fraqueza",
+                "neuro_parestesia",
+                "neuro_crises_convulsivas",
+                "neuro_descricao_crise",
+                "neuro_frequencia_crises",
+                "neuro_deficit_focal",
+                "neuro_ultimo_evento",
+                "neuro_antecedentes",
+                "neuro_estado_mental",
+                "neuro_pares_cranianos",
+                "neuro_forca_tono",
+                "neuro_reflexos",
+                "neuro_sensibilidade",
+                "neuro_coordenacao",
+                "neuro_marcha",
+                "neuro_sinais_meningeos",
+                "neuro_tc",
+                "neuro_rm",
+                "neuro_eeg",
+                "neuro_enmg",
+                "neuro_liquor",
+                "neuro_hipotese_diag",
+                "neuro_conduta",
+                "neuro_orientacoes",
+                "neuro_retorno",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_neurologia_empresa",
+                "idx_neurologia_instalacao",
+                "idx_neurologia_paciente",
+                "idx_neurologia_profissional",
+                "uniq_neurologia_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "nfse": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "agendamento_id",
+                "numero_rps",
+                "serie_rps",
+                "numero_nfse",
+                "codigo_verificacao",
+                "data_emissao",
+                "data_competencia",
+                "valor_servico",
+                "valor_deducoes",
+                "valor_iss",
+                "aliquota_iss",
+                "valor_liquido",
+                "discriminacao",
+                "item_lista_servico",
+                "codigo_tributacao_municipio",
+                "iss_retido",
+                "status",
+                "protocolo",
+                "xml_envio",
+                "xml_retorno",
+                "pdf_url",
+                "mensagem_retorno",
+                "motivo_cancelamento",
+                "criado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_nfse_data",
+                "idx_nfse_empresa",
+                "idx_nfse_paciente",
+                "idx_nfse_status"
+            ],
+            "foreign_keys": [
+                "fk_nfse_empresa_multi"
+            ]
+        },
+        "notificacoes_sistema": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "usuario_id",
+                "tipo",
+                "titulo",
+                "mensagem",
+                "url",
+                "referencia_tabela",
+                "referencia_id",
+                "dedupe_key",
+                "agendar_para",
+                "entregue_em",
+                "lida_em",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_notif_agendar",
+                "idx_notif_empresa_usuario",
+                "idx_notif_entregue",
+                "uk_notif_dedupe"
+            ],
+            "foreign_keys": []
+        },
+        "odontograma": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "dente",
+                "face",
+                "tipo_denticao",
+                "condicao",
+                "cor",
+                "observacao",
+                "data_registro",
+                "profissional_id",
+                "criado_em",
+                "tratamento_planejado",
+                "valor_estimado"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_odonto_paciente",
+                "idx_odontograma_empresa"
+            ],
+            "foreign_keys": [
+                "fk_odontograma_empresa_multi"
+            ]
+        },
+        "odontograma_historico": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "dente",
+                "face",
+                "condicao_anterior",
+                "condicao_nova",
+                "observacao",
+                "profissional_id",
+                "data_registro"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_odh_paciente",
+                "idx_odonto_hist_empresa"
+            ],
+            "foreign_keys": [
+                "fk_odonto_hist_empresa_multi"
+            ]
+        },
+        "oftalmologia_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "oftalmo_queixa_principal",
+                "oftalmo_lateralidade",
+                "oftalmo_inicio",
+                "oftalmo_dor_ocular",
+                "oftalmo_trauma",
+                "oftalmo_cirurgias_previas",
+                "oftalmo_comorbidades",
+                "oftalmo_av_sc_od",
+                "oftalmo_av_sc_oe",
+                "oftalmo_av_cc_od",
+                "oftalmo_av_cc_oe",
+                "oftalmo_tonometria",
+                "oftalmo_biomicroscopia",
+                "oftalmo_fundo_olho",
+                "oftalmo_refracao",
+                "oftalmo_hipotese_diag",
+                "oftalmo_exames_complementares",
+                "oftalmo_prescricao",
+                "oftalmo_conduta",
+                "oftalmo_orientacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_oftalmologia_empresa",
+                "idx_oftalmologia_lateralidade",
+                "idx_oftalmologia_paciente",
+                "idx_oftalmologia_profissional",
+                "uniq_oftalmologia_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "ortopedia_traumatologia_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "orto_regiao",
+                "orto_lateralidade",
+                "orto_queixa_principal",
+                "orto_mecanismo_trauma",
+                "orto_tempo_sintomas",
+                "orto_escala_dor",
+                "orto_limitacao_funcional",
+                "orto_trauma_recente",
+                "orto_neurovascular",
+                "orto_inspecao",
+                "orto_amplitude_movimento",
+                "orto_forca",
+                "orto_testes_especificos",
+                "orto_rx",
+                "orto_rm",
+                "orto_usg",
+                "orto_hipotese_diag",
+                "orto_classificacao_fratura",
+                "orto_imobilizacao",
+                "orto_medicacoes",
+                "orto_fisioterapia",
+                "orto_conduta",
+                "orto_orientacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_ortopedia_empresa",
+                "idx_ortopedia_paciente",
+                "idx_ortopedia_profissional",
+                "idx_ortopedia_regiao",
+                "uniq_ortopedia_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "paciente_alertas": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "tema",
+                "tipo",
+                "prioridade",
+                "titulo",
+                "descricao",
+                "inicio_em",
+                "fim_em",
+                "ativo",
+                "criado_por",
+                "atualizado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_alertas_ativo",
+                "idx_alertas_empresa_paciente",
+                "idx_alertas_prioridade",
+                "idx_alertas_tema"
+            ],
+            "foreign_keys": []
+        },
+        "paciente_consentimentos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "tipo",
+                "finalidade",
+                "base_legal",
+                "canal",
+                "status",
+                "aceito_em",
+                "revogado_em",
+                "validade_ate",
+                "observacoes",
+                "criado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_consentimentos_empresa_paciente",
+                "idx_consentimentos_status",
+                "idx_consentimentos_validade"
+            ],
+            "foreign_keys": []
+        },
+        "paciente_diagnosticos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "prontuario_id",
+                "cid_codigo",
+                "descricao",
+                "tipo",
+                "data_diagnostico",
+                "profissional_id",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_diag_empresa",
+                "idx_diag_paciente"
+            ],
+            "foreign_keys": [
+                "fk_diag_empresa_multi"
+            ]
+        },
+        "pacientes": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "nome",
+                "tipo_pessoa",
+                "cpf_cnpj",
+                "rg",
+                "data_nascimento",
+                "sexo",
+                "email",
+                "telefone",
+                "celular",
+                "profissao",
+                "estado_civil",
+                "convenio",
+                "numero_carteirinha",
+                "cep",
+                "logradouro",
+                "numero",
+                "complemento",
+                "bairro",
+                "cidade",
+                "uf",
+                "codigo_municipio",
+                "tipo_sanguineo",
+                "alergias",
+                "medicamentos_uso",
+                "historico_familiar",
+                "observacoes",
+                "ativo",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "fk_pac_empresa",
+                "idx_cpf",
+                "idx_nome",
+                "idx_pacientes_empresa"
+            ],
+            "foreign_keys": [
+                "fk_pacientes_empresa_multi"
+            ]
+        },
+        "pediatria_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "ped_responsavel_nome",
+                "ped_responsavel_parentesco",
+                "ped_queixa_principal",
+                "ped_inicio_quadro",
+                "ped_febre",
+                "ped_tempo_febre",
+                "ped_sintomas_associados",
+                "ped_contato_doentes",
+                "ped_peso_atual",
+                "ped_altura_atual",
+                "ped_perimetro_cefalico",
+                "ped_curva_crescimento",
+                "ped_desenvolvimento_neuropsicomotor",
+                "ped_aleitamento",
+                "ped_vacinacao_em_dia",
+                "ped_vacinas_pendentes",
+                "ped_alergias",
+                "ped_medicacoes_uso",
+                "ped_temperatura",
+                "ped_fc",
+                "ped_fr",
+                "ped_saturacao",
+                "ped_exame_fisico",
+                "ped_hipotese_diag",
+                "ped_conduta",
+                "ped_sinais_alarme",
+                "ped_retorno",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_pediatria_empresa",
+                "idx_pediatria_paciente",
+                "idx_pediatria_profissional",
+                "idx_pediatria_vacina",
+                "uniq_pediatria_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "plano_tratamento_itens": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "plano_id",
+                "procedimento_id",
+                "dente",
+                "face",
+                "descricao",
+                "quantidade",
+                "valor_unitario",
+                "valor_total",
+                "status",
+                "executado_em",
+                "executado_por",
+                "ordem"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_plano_itens_empresa",
+                "idx_pti_plano"
+            ],
+            "foreign_keys": [
+                "fk_plano_itens_empresa_multi"
+            ]
+        },
+        "planos_cuidado": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "tema",
+                "titulo",
+                "objetivo",
+                "metas",
+                "conduta",
+                "frequencia_retorno",
+                "proxima_revisao",
+                "status",
+                "indicadores",
+                "orientacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_planos_cuidado_empresa_paciente",
+                "idx_planos_cuidado_profissional",
+                "idx_planos_cuidado_status",
+                "idx_planos_cuidado_tema"
+            ],
+            "foreign_keys": []
+        },
+        "planos_tratamento": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "titulo",
+                "descricao",
+                "valor_total",
+                "desconto",
+                "valor_final",
+                "parcelas",
+                "status",
+                "aprovado_em",
+                "aprovado_assinatura",
+                "validade",
+                "observacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_planos_empresa",
+                "idx_pt_paciente"
+            ],
+            "foreign_keys": [
+                "fk_planos_empresa_multi"
+            ]
+        },
+        "portal_acesso_limites": {
+            "columns": [
+                "chave",
+                "tentativas",
+                "janela"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_portal_limite_janela"
+            ],
+            "foreign_keys": []
+        },
+        "portal_solicitacoes": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "especialidade",
+                "data_inicio",
+                "data_fim",
+                "status",
+                "agendamento_id",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "fk_portal_agendamento",
+                "fk_portal_paciente",
+                "fk_portal_profissional",
+                "idx_portal_empresa_status",
+                "idx_portal_paciente",
+                "idx_portal_profissional_data"
+            ],
+            "foreign_keys": [
+                "fk_portal_agendamento",
+                "fk_portal_empresa",
+                "fk_portal_paciente",
+                "fk_portal_profissional"
+            ]
+        },
+        "procedimentos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "nome",
+                "descricao",
+                "valor",
+                "duracao_minutos",
+                "codigo_servico",
+                "categoria",
+                "ativo",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "fk_proc_empresa",
+                "idx_procedimentos_empresa"
+            ],
+            "foreign_keys": [
+                "fk_procedimentos_empresa_multi"
+            ]
+        },
+        "prontuarios": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "agendamento_id",
+                "data_atendimento",
+                "anamnese",
+                "queixa_principal",
+                "exame_fisico",
+                "hipotese_diagnostica",
+                "conduta",
+                "evolucao",
+                "observacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_pront_data",
+                "idx_pront_paciente",
+                "idx_prontuarios_empresa"
+            ],
+            "foreign_keys": [
+                "fk_prontuarios_empresa_multi"
+            ]
+        },
+        "protocolos_clinicos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "tema",
+                "titulo",
+                "categoria",
+                "objetivo",
+                "checklist",
+                "criterios",
+                "orientacoes",
+                "tags",
+                "ativo",
+                "criado_por",
+                "atualizado_por",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_protocolos_ativo",
+                "idx_protocolos_empresa_tema"
+            ],
+            "foreign_keys": []
+        },
+        "psicologia_escalas": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "nome_escala",
+                "score_total",
+                "classificacao",
+                "data_aplicacao",
+                "observacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_psic_escalas_data",
+                "idx_psic_escalas_empresa",
+                "idx_psic_escalas_paciente",
+                "idx_psic_escalas_profissional"
+            ],
+            "foreign_keys": []
+        },
+        "psicologia_planos": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "abordagem",
+                "demanda_focal",
+                "objetivo_principal",
+                "metas",
+                "metas_curto_prazo",
+                "metas_medio_prazo",
+                "metas_longo_prazo",
+                "estrategias_intervencao",
+                "indicadores_evolucao",
+                "criterios_alta",
+                "risco_monitorado",
+                "frequencia_sugerida",
+                "status",
+                "data_inicio",
+                "data_reavaliacao",
+                "observacoes",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_psic_planos_empresa",
+                "idx_psic_planos_paciente",
+                "idx_psic_planos_profissional",
+                "idx_psic_planos_prontuario",
+                "idx_psic_planos_reavaliacao",
+                "idx_psic_planos_status"
+            ],
+            "foreign_keys": []
+        },
+        "psicologia_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "tipo_registro",
+                "demanda_principal",
+                "historico_pessoal",
+                "historico_familiar",
+                "historico_psiquiatrico",
+                "uso_medicacao",
+                "fatores_risco",
+                "fatores_protecao",
+                "objetivo_terapeutico",
+                "queixa_historico",
+                "expectativas_tratamento",
+                "encaminhado_por",
+                "motivo_encaminhamento",
+                "historico_saude",
+                "uso_substancias",
+                "sono_apetite",
+                "suporte_rede",
+                "contexto_escolar_profissional",
+                "antecedentes_trauma_luto",
+                "humor_afeto",
+                "pensamento_linguagem",
+                "comportamento",
+                "cognicao_orientacao",
+                "estado_mental_aparencia",
+                "estado_mental_sensopercepcao",
+                "risco_suicida",
+                "risco_autoheteroagressao",
+                "temas_sessao",
+                "intervencoes_realizadas",
+                "tecnicas_utilizadas",
+                "resposta_paciente",
+                "adesao_processo",
+                "recursos_mobilizados",
+                "manejo_crise",
+                "tarefas_entre_sessoes",
+                "encaminhamentos",
+                "plano_sessao_seguinte",
+                "observacoes_confidenciais",
+                "consentimento_tipo",
+                "consentimento_terapia_texto",
+                "consentimento_tele_texto",
+                "consentimento_privacidade_texto",
+                "consentimento_compartilhamento_texto",
+                "consentimento_gravacao_texto",
+                "consentimento_terapia_aceito",
+                "consentimento_tele_aceito",
+                "consentimento_privacidade_aceito",
+                "consentimento_compartilhamento_aceito",
+                "consentimento_gravacao_aceito",
+                "consentimento_nome_responsavel",
+                "consentimento_documento",
+                "consentimento_parentesco",
+                "consentimento_testemunha",
+                "consentimento_registrado_em",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_psic_prontuario_empresa",
+                "idx_psic_prontuario_paciente",
+                "idx_psic_prontuario_profissional",
+                "idx_psic_prontuario_risco",
+                "idx_psic_prontuario_tipo",
+                "uniq_psic_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "psiquiatria_prontuario": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "prontuario_id",
+                "paciente_id",
+                "profissional_id",
+                "psiq_tipo_atendimento",
+                "psiq_queixa_principal",
+                "psiq_inicio_sintomas",
+                "psiq_fatores_desencadeantes",
+                "psiq_historico_psiquiatrico",
+                "psiq_internacoes_previas",
+                "psiq_historico_familiar",
+                "psiq_uso_substancias",
+                "psiq_comorbidades",
+                "psiq_humor_afeto",
+                "psiq_pensamento",
+                "psiq_percepcao",
+                "psiq_cognicao",
+                "psiq_juizo_critica",
+                "psiq_risco_suicidio",
+                "psiq_plano_seguranca",
+                "psiq_risco_heteroagressao",
+                "psiq_hipotese_diag",
+                "psiq_cid10",
+                "psiq_medicacoes",
+                "psiq_orientacoes_efeitos",
+                "psiq_psicoterapia_indicada",
+                "psiq_encaminhamentos",
+                "psiq_conduta_urgente",
+                "psiq_plano_retorno",
+                "criado_em",
+                "atualizado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_psiquiatria_empresa",
+                "idx_psiquiatria_paciente",
+                "idx_psiquiatria_profissional",
+                "idx_psiquiatria_risco",
+                "uniq_psiquiatria_prontuario"
+            ],
+            "foreign_keys": []
+        },
+        "receitas": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "prontuario_id",
+                "tipo",
+                "conteudo",
+                "data_emissao",
+                "dias_afastamento",
+                "cid",
+                "criado_em",
+                "assinatura_digital",
+                "assinatura_certificado",
+                "qr_code",
+                "hash_documento",
+                "memed_id",
+                "memed_url"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_rec_paciente",
+                "idx_receitas_empresa"
+            ],
+            "foreign_keys": [
+                "fk_receitas_empresa_multi"
+            ]
+        },
+        "solicitacoes_exame": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "paciente_id",
+                "profissional_id",
+                "prontuario_id",
+                "exames",
+                "indicacao_clinica",
+                "cid_codigo",
+                "urgencia",
+                "data_solicitacao",
+                "status",
+                "arquivo_resultado",
+                "observacoes",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_se_paciente",
+                "idx_solicitacoes_empresa"
+            ],
+            "foreign_keys": [
+                "fk_solicitacoes_empresa_multi"
+            ]
+        },
+        "teleconsultas": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "agendamento_id",
+                "sala_id",
+                "link_paciente",
+                "link_profissional",
+                "iniciada_em",
+                "encerrada_em",
+                "gravacao_url",
+                "consentimento_paciente",
+                "criado_em"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "idx_teleconsultas_empresa",
+                "uk_ag"
+            ],
+            "foreign_keys": [
+                "fk_teleconsultas_empresa_multi"
+            ]
+        },
+        "usuarios": {
+            "columns": [
+                "id",
+                "empresa_id",
+                "nome",
+                "email",
+                "senha",
+                "perfil",
+                "especialidade",
+                "registro_profissional",
+                "telefone",
+                "percentual_repasse",
+                "tema_preferido",
+                "mfa_metodo",
+                "cor_tema",
+                "avatar",
+                "ativo",
+                "ultimo_login",
+                "token_reset",
+                "criado_em",
+                "atualizado_em",
+                "mfa_secret",
+                "mfa_codigos_recuperacao",
+                "mfa_codigo_temp",
+                "mfa_codigo_expira"
+            ],
+            "indexes": [
+                "PRIMARY",
+                "fk_usuario_empresa",
+                "idx_usuarios_empresa",
+                "uk_usuario_empresa_email"
+            ],
+            "foreign_keys": [
+                "fk_usuarios_empresa_multi"
+            ]
+        }
+    }
+}
